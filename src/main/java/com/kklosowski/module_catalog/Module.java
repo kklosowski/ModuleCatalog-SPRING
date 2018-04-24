@@ -47,6 +47,12 @@ public class Module {
     }
 
     @Override
+    public boolean equals(Object obj){
+        return (obj instanceof Module)
+                && ((Module) obj).getName().equals(this.name);
+    }
+
+    @Override
     public String toString() {
         return "Module{" +
                 "subject='" + subject + '\'' +
