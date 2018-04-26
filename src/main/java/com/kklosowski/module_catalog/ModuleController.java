@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping("/api")
 @EnableAutoConfiguration
 public class ModuleController {
 
@@ -22,6 +23,15 @@ public class ModuleController {
 //    );
     private Gson gson = new Gson();
 
+    @GetMapping("/add")
+    @ResponseBody
+    String index() {
+        moduleLibrary.add(new Module("Science", 2, "Compsci", false));
+        moduleLibrary.add(new Module("Science", 1, "Math", false));
+        moduleLibrary.add(new Module("Science", 3, "Physics", true));
+        return "added";
+    }
+
     @GetMapping("/all")
     @ResponseBody
     String all(@RequestParam(value = "discontinued", required = false, defaultValue = "true") String discontinued) {
@@ -29,6 +39,7 @@ public class ModuleController {
                 .filter(x -> Boolean.valueOf(discontinued) || !x.isDiscontinued())
                 .collect(Collectors.toList()));
     }
+
 
     @GetMapping("/")
     @ResponseBody
@@ -86,7 +97,7 @@ public class ModuleController {
                          @PathVariable("name") String name,
                          @RequestParam(value = "discontinued", defaultValue = "false", required = false) String discontinued) {
 
-        if (moduleLibrary.stream().anyMatch(x -> Objects.equals(x.getName(), name))) {
+        if (moduleLibrary.stream().anyMatch(x -> x.getName().equals(name))) {
             return false;
         } else {
             try {
