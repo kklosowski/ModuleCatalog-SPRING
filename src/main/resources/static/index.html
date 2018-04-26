@@ -28,12 +28,13 @@
             <th scope="col">Discontinued</th>
         </tr>
         </thead>
-        <tr v-for="result in results">
+        <tr v-for="result in results" v-bind:id="result.name">
             <td>{{ result.subject }}</td>
             <td>{{ result.level }}</td>
             <td>{{ result.name }}</td>
             <td>{{ result.discontinued }}</td>
-            <td><button v-bind:id="result.name">Change status</button></td>
+            <td><button class="delBtn">Change status</button></td>
+            <td><button class="delBtn">Delete</button></td>
         </tr>
         <tbody>
     </table>

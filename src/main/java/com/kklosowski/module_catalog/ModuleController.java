@@ -5,89 +5,57 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/api")
 @EnableAutoConfiguration
 public class ModuleController {
 
-    public List<Module> moduleLibrary = new ArrayList<>();
-    //            Arrays.asList(
-//            new Module("Science", 2, "Compsci", false),
-//            new Module("Science", 1, "Math", false),
-//            new Module("Science", 3, "Physics", true)
-//    );
-    private Gson gson = new Gson();
 
-    @GetMapping("/add")
-    @ResponseBody
-    String index() {
-        moduleLibrary.add(new Module("Science", 2, "Compsci", false));
-        moduleLibrary.add(new Module("Science", 1, "Math", false));
-        moduleLibrary.add(new Module("Science", 3, "Physics", true));
-        return "added";
-    }
+    private Gson gson = new Gson();
+    ModuleDaoImpl moduleDao = new ModuleDaoImpl();
+
 
     @GetMapping("/all")
     @ResponseBody
-    String all(@RequestParam(value = "discontinued", required = false, defaultValue = "true") String discontinued) {
-        return gson.toJson(moduleLibrary.stream()
-                .filter(x -> Boolean.valueOf(discontinued) || !x.isDiscontinued())
-                .collect(Collectors.toList()));
+    List<Module> all(@RequestParam(value = "discontinued", required = false, defaultValue = "true") String discontinued) {
+        return moduleDao.getAllModules(Boolean.valueOf(discontinued));
     }
 
-
-    @GetMapping("/")
-    @ResponseBody
-    String subjects() {
-        return gson.toJson(
-                moduleLibrary.stream()
-                        .map(Module::getSubject)
-                        .distinct()
-                        .toArray(String[]::new)
-        );
-    }
+//
+//    @GetMapping("/")
+//    @ResponseBody
+//    String subjects() {
+//        return gson.toJson(
+//                moduleLibrary.stream()
+//                        .map(Module::getSubject)
+//                        .distinct()
+//                        .toArray(String[]::new)
+//        );
+//    }
 
     @GetMapping("/{subject}")
     @ResponseBody
-    String levels(@PathVariable("subject") String subject,
+    List<Module> levels(@PathVariable("subject") String subject,
                   @RequestParam(value = "discontinued", required = false, defaultValue = "true") String discontinued) {
-        return gson.toJson(
-                moduleLibrary.stream()
-                        .filter(x -> x.getSubject().equals(subject))
-                        .filter(x -> Boolean.valueOf(discontinued) || !x.isDiscontinued())
-                        .collect(Collectors.toList())
-        );
+        return moduleDao.getModulesBySubject(subject, Boolean.valueOf(discontinued));
     }
 
     @GetMapping("/{subject}/{level}")
     @ResponseBody
-    String modules(@PathVariable("subject") String subject,
+    List<Module> modules(@PathVariable("subject") String subject,
                    @PathVariable("level") int level,
                    @RequestParam(value = "discontinued", required = false, defaultValue = "true") String discontinued) {
-        return gson.toJson(
-                moduleLibrary.stream()
-                        .filter(x -> x.getSubject().equals(subject))
-                        .filter(x -> x.getLevel() == level)
-                        .filter(x -> Boolean.valueOf(discontinued) || !x.isDiscontinued())
-                        .collect(Collectors.toList())
-        );
+        return moduleDao.getModulesBySubjectAndLevel(subject, level, Boolean.valueOf(discontinued));
     }
 
     @GetMapping("/{subject}/{level}/{name}")
     @ResponseBody
-    String module(@PathVariable("subject") String subject,
+    Module module(@PathVariable("subject") String subject,
                   @PathVariable("level") int level,
                   @PathVariable("name") String name) {
-        return gson.toJson(
-                moduleLibrary.stream()
-                        .filter(x -> x.getName().equals(name))
-                        .collect(Collectors.toList())
-        );
+        return moduleDao.getModule(name);
     }
 
     @PostMapping("/{subject}/{level}/{name}")
@@ -97,37 +65,20 @@ public class ModuleController {
                          @PathVariable("name") String name,
                          @RequestParam(value = "discontinued", defaultValue = "false", required = false) String discontinued) {
 
-        if (moduleLibrary.stream().anyMatch(x -> x.getName().equals(name))) {
-            return false;
-        } else {
-            try {
-                moduleLibrary.add(new Module(subject, level, name, Boolean.valueOf(discontinued)));
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            return true;
-        }
+        return moduleDao.addModule(new Module(subject, level, name, Boolean.valueOf(discontinued)));
     }
 
     @DeleteMapping("/{name}")
     @ResponseBody
     boolean deleteModule(@PathVariable("name") String name) {
-        return moduleLibrary.removeIf(x -> x.getName().equals(name));
+        return moduleDao.deleteModule(name);
     }
 
     @PatchMapping("/{name}")
     @ResponseBody
     boolean setActiveStatus(@PathVariable("name") String name,
                             @RequestParam(value = "discontinued") String discontinued) {
-        if (!moduleLibrary.stream().anyMatch(x -> Objects.equals(x.getName(), name))) {
-            return false;
-        } else {
-            moduleLibrary.stream()
-                    .filter(x -> x.getName().equals(name))
-                    .findFirst()
-                    .get()
-                    .setDiscontinued(Boolean.valueOf(discontinued));
-            return true;
-        }
+        return moduleDao.updateModule(name, Boolean.valueOf(discontinued));
+
     }
 }

@@ -1,17 +1,39 @@
 package com.kklosowski.module_catalog;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Module")
 public class Module {
 
+    @Id
+    @GenericGenerator(name="kaugen" , strategy="increment")
+    @GeneratedValue(generator="kaugen")
+    @Column(name="id")
+    private Integer id;
     private String subject;
     private int level;
+    @Column(unique=true)
     private String name;
-    private boolean discontinued;
+    private Boolean discontinued;
+
+//    public Module (String subject, int level, String name, boolean discontinued) {
+//        this.subject = subject;
+//        this.level = level;
+//        this.name = name;
+//        this.discontinued = discontinued;
+//    }
 
     public Module(String subject, int level, String name, boolean discontinued) {
         this.subject = subject;
         this.level = level;
         this.name = name;
         this.discontinued = discontinued;
+    }
+
+    public Module() {
     }
 
     public String getSubject() {
@@ -53,11 +75,26 @@ public class Module {
     }
 
     @Override
+    public int hashCode() {
+        return this.name.hashCode();
+    }
+
+    @Override
     public String toString() {
         return "Module{" +
-                "subject='" + subject + '\'' +
+                "id=" + id +
+                ", subject='" + subject + '\'' +
                 ", level=" + level +
                 ", name='" + name + '\'' +
+                ", discontinued=" + discontinued +
                 '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
