@@ -23,6 +23,7 @@ public class ModuleController {
         return moduleDao.getAllModules(Boolean.valueOf(discontinued));
     }
 
+    //TODO: Make unique subject, level and name listings for select boxes
 //
 //    @GetMapping("/")
 //    @ResponseBody
@@ -38,7 +39,7 @@ public class ModuleController {
     @GetMapping("/{subject}")
     @ResponseBody
     List<Module> levels(@PathVariable("subject") String subject,
-                  @RequestParam(value = "discontinued", required = false, defaultValue = "true") String discontinued) {
+                  @RequestParam(value = "discontinued", required = false, defaultValue = "false") String discontinued) {
         return moduleDao.getModulesBySubject(subject, Boolean.valueOf(discontinued));
     }
 
@@ -46,7 +47,7 @@ public class ModuleController {
     @ResponseBody
     List<Module> modules(@PathVariable("subject") String subject,
                    @PathVariable("level") int level,
-                   @RequestParam(value = "discontinued", required = false, defaultValue = "true") String discontinued) {
+                   @RequestParam(value = "discontinued", required = false, defaultValue = "false") String discontinued) {
         return moduleDao.getModulesBySubjectAndLevel(subject, level, Boolean.valueOf(discontinued));
     }
 

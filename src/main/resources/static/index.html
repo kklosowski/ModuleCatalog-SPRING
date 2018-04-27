@@ -5,21 +5,20 @@
     <title>Index</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
           integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
-            integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
-            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    <script src="lib/TableSorter/jquery.tablesorter.js"></script>
+
     <script src="js/main.js"></script>
 </head>
 <body>
-
-<button id="add">Dodaj</button>
-
-
 <div id="app" class="container">
-    <table class="table table-striped">
+    <table id="#moduleTable" class="table table-striped">
         <thead>
         <tr>
             <th scope="col">Subject</th>
@@ -27,16 +26,26 @@
             <th scope="col">Module</th>
             <th scope="col">Discontinued</th>
         </tr>
+
+        <!--<tr>-->
+            <!--<td scope="col"><input id="addSubject" type="text" name="Subject" placeholder="Subject"/> </td>-->
+            <!--<td scope="col"><input id="addLevel" type="number" name="Level" placeholder="1"/></td>-->
+            <!--<td scope="col"><input id="addName" type="text" name="Name" placeholder="Name"/></td>-->
+            <!--<td scope="col"><input id="addStatus" type="checkbox" name="Discontinued" value="false"/></td>-->
+            <!--<td scope="col" colspan="2"><button id="dupa" v-on:click="add">Add Module</button></td>-->
+        <!--</tr>-->
+
         </thead>
+        <tbody>
         <tr v-for="result in results" v-bind:id="result.name">
             <td>{{ result.subject }}</td>
             <td>{{ result.level }}</td>
             <td>{{ result.name }}</td>
             <td>{{ result.discontinued }}</td>
-            <td><button class="delBtn">Change status</button></td>
-            <td><button class="delBtn">Delete</button></td>
+            <td><button class="chgBtn" v-on:click="changeStatus">Change status</button></td>
+            <td><button class="delBtn" v-on:click="remove">Delete</button></td>
         </tr>
-        <tbody>
+        </tbody>
     </table>
 </div>
 </body>
