@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class App {
 
     public static void main(String[] args) {
-        ModuleDaoImpl moduleDao = new ModuleDaoImpl();
-//        moduleDao.getAllModules().forEach(System.out::println);
         SpringApplication.run(ModuleController.class, args);
     }
 }

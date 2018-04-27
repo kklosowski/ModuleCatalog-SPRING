@@ -19,13 +19,6 @@ public class Module {
     private String name;
     private Boolean discontinued;
 
-//    public Module (String subject, int level, String name, boolean discontinued) {
-//        this.subject = subject;
-//        this.level = level;
-//        this.name = name;
-//        this.discontinued = discontinued;
-//    }
-
     public Module(String subject, int level, String name, boolean discontinued) {
         this.subject = subject;
         this.level = level;
