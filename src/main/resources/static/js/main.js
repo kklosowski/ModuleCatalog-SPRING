@@ -44,13 +44,18 @@ $(document).ready(function () {
             },
 
             changeStatus: function (event) {
-                var elementId = event.srcElement.parentNode.parentNode.id;
+                console.log("asd ");
+                alert(":asd")
+                // var elementId = event.srcElement.parentNode.parentNode.id;
                 //TODO: FIX STATUS CHANGING
-                axios.patch(`/api/${elementId}?discontinued=false`)
-                    .then(function () {
-                        var element = app.results.filter(x => x.name == elementId);
-                        element.discontinued = false;
-                    })
+                //
+                // axios.patch(`/api/${elementId}?discontinued=false`)
+                //     .then(function () {
+                //         app.results.forEach(x => {if(x.name === elementId) {
+                //             alert(x.name);
+                //             x.discontinued = false
+                //         }});
+                //     })
             }
         }
     });
