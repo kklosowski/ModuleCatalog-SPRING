@@ -75,7 +75,9 @@ $(document).ready(function () {
                 } else {
                     path += `/${subject}`
                 }
-                if (level !== "Any"){ path += `/${level}`}
+                if (level !== "Any") {
+                    path += `/${level}`
+                }
 
                 path += `?discontinued=${status}`;
 
@@ -104,10 +106,12 @@ $(document).ready(function () {
             changeStatus: function (event) {
                 var moduleName = event.srcElement.parentNode.parentNode.id;
                 var current = false;
-                app.results.forEach(x => {if(x.name === moduleName) {
-                    current = x.discontinued;
-                    x.discontinued = !current;
-                }});
+                app.results.forEach(x => {
+                    if (x.name === moduleName) {
+                        current = x.discontinued;
+                        x.discontinued = !current;
+                    }
+                });
                 axios.patch(`/api/${moduleName}?discontinued=${!current}`)
                     .then(function (response) {
                         console.log(`PATCH /api/${moduleName}?discontinued=${!current}`)

@@ -12,13 +12,13 @@ import javax.persistence.*;
 public class Module {
 
     @Id
-    @GenericGenerator(name="kaugen" , strategy="increment")
-    @GeneratedValue(generator="kaugen")
-    @Column(name="id")
+    @GenericGenerator(name = "kaugen", strategy = "increment")
+    @GeneratedValue(generator = "kaugen")
+    @Column(name = "id")
     private Integer id;
     private String subject;
     private int level;
-    @Column(unique=true)
+    @Column(unique = true)
     private String name;
     private Boolean discontinued;
 
@@ -116,7 +116,7 @@ public class Module {
     }
 
     @Override
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
         return (obj instanceof Module)
                 && ((Module) obj).getName().equals(this.name);
     }

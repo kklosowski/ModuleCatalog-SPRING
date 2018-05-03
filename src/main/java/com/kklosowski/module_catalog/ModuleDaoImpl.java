@@ -14,8 +14,6 @@ import java.util.List;
  */
 public class ModuleDaoImpl implements ModuleDao {
 
-    @Autowired
-    private  SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
     /**
      * The hibernate session.
      */
@@ -24,6 +22,9 @@ public class ModuleDaoImpl implements ModuleDao {
      * The hibernate transaction.
      */
     Transaction tx = null;
+
+    @Autowired
+    private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
     @Override
     public Module getModule(String name) {
@@ -102,7 +103,7 @@ public class ModuleDaoImpl implements ModuleDao {
         session = sessionFactory.openSession();
         tx = session.beginTransaction();
         Module module = getModule(name);
-        if (module != null){
+        if (module != null) {
             module.setDiscontinued(discontinued);
             session.update(module);
             tx.commit();

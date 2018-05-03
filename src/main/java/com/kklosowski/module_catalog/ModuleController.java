@@ -33,6 +33,7 @@ public class ModuleController {
         return moduleDao.getAllModules(Boolean.valueOf(discontinued));
     }
 
+
     /**
      * Subjects list.
      *
@@ -40,7 +41,7 @@ public class ModuleController {
      */
     @GetMapping("/subjects")
     @ResponseBody
-    List<String> subjects(){
+    List<String> subjects() {
         return moduleDao.getSubjects();
     }
 
@@ -51,7 +52,7 @@ public class ModuleController {
      */
     @GetMapping("/levels")
     @ResponseBody
-    List<Integer> levels(){
+    List<Integer> levels() {
         return moduleDao.getLevels();
     }
 
@@ -65,7 +66,7 @@ public class ModuleController {
     @GetMapping("/{subject}")
     @ResponseBody
     List<Module> modulesBySubject(@PathVariable("subject") String subject,
-                  @RequestParam(value = "discontinued", required = false, defaultValue = "false") String discontinued) {
+                                  @RequestParam(value = "discontinued", required = false, defaultValue = "false") String discontinued) {
         return moduleDao.getModulesBySubject(subject, Boolean.valueOf(discontinued));
     }
 
@@ -80,8 +81,8 @@ public class ModuleController {
     @GetMapping("/{subject}/{level}")
     @ResponseBody
     List<Module> modulesBySubjectAndLevel(@PathVariable("subject") String subject,
-                   @PathVariable("level") int level,
-                   @RequestParam(value = "discontinued", required = false, defaultValue = "false") String discontinued) {
+                                          @PathVariable("level") int level,
+                                          @RequestParam(value = "discontinued", required = false, defaultValue = "false") String discontinued) {
         return moduleDao.getModulesBySubjectAndLevel(subject, level, Boolean.valueOf(discontinued));
     }
 

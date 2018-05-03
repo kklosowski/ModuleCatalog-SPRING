@@ -1,13 +1,17 @@
 button {
     width: 100%;
 }
+
 select {
     width: 100%;
     text-align: left;
 }
+
 .table {
     margin-top: 10px;
     margin-bottom: 50px;
 }
 
-h2 {margin-top: 30px}
+h2 {
+    margin-top: 30px
+}
