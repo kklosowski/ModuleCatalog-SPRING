@@ -1,7 +1,5 @@
 package com.kklosowski.module_catalog;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-
 import java.util.List;
 
 public interface ModuleDao {
@@ -12,4 +10,6 @@ public interface ModuleDao {
     public boolean addModule(Module module);
     public boolean deleteModule(String name);
     public boolean updateModule(String name, Boolean discontinued);
+    public List<String> getSubjects();
+    public List<Integer> getLevels();
 }

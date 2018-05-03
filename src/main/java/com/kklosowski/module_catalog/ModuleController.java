@@ -19,11 +19,21 @@ public class ModuleController {
 
     @GetMapping("/all")
     @ResponseBody
-    List<Module> all(@RequestParam(value = "discontinued", required = false, defaultValue = "true") String discontinued) {
+    List<Module> all(@RequestParam(value = "discontinued", required = false, defaultValue = "false") String discontinued) {
         return moduleDao.getAllModules(Boolean.valueOf(discontinued));
     }
 
-    //TODO: Make unique subject, level and name listings for select boxes
+    @GetMapping("/subjects")
+    @ResponseBody
+    List<String> subjects(){
+        return moduleDao.getSubjects();
+    }
+
+    @GetMapping("/levels")
+    @ResponseBody
+    List<Integer> levels(){
+        return moduleDao.getLevels();
+    }
 
     @GetMapping("/{subject}")
     @ResponseBody

@@ -8,7 +8,6 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ModuleDaoImpl implements ModuleDao {
 
@@ -102,5 +101,17 @@ public class ModuleDaoImpl implements ModuleDao {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public List<String> getSubjects() {
+        session = sessionFactory.openSession();
+        return session.createNativeQuery("SELECT DISTINCT m.subject FROM Module m").list();
+    }
+
+    @Override
+    public List<Integer> getLevels() {
+        session = sessionFactory.openSession();
+        return session.createNativeQuery("SELECT DISTINCT m.level FROM Module m WHERE m.subject == subject").list();
     }
 }
