@@ -24,17 +24,6 @@ public class ModuleController {
     }
 
     //TODO: Make unique subject, level and name listings for select boxes
-//
-//    @GetMapping("/")
-//    @ResponseBody
-//    String subjects() {
-//        return gson.toJson(
-//                moduleLibrary.stream()
-//                        .map(Module::getSubject)
-//                        .distinct()
-//                        .toArray(String[]::new)
-//        );
-//    }
 
     @GetMapping("/{subject}")
     @ResponseBody
