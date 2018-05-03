@@ -21,6 +21,8 @@ $(document).ready(function () {
                 axios.get("/api/subjects")
                     .then(function (response) {
                         console.log("GET /api/subjects");
+                        $("#selectSubject").empty();
+                        $("#selectSubject").append(`<option>Any</option>`)
                         response.data.forEach(x => {
                             $("#selectSubject").append(`<option>${x}</option>`);
                         })
@@ -32,6 +34,8 @@ $(document).ready(function () {
                 axios.get("/api/levels")
                     .then(function (response) {
                         console.log("GET /api/levels");
+                        $("#selectLevel").empty();
+                        $("#selectLevel").append(`<option>Any</option>`);
                         response.data.forEach(x => {
                             $("#selectLevel").append(`<option>${x}</option>`);
                         })
@@ -53,7 +57,9 @@ $(document).ready(function () {
 
                         if (response.data == true) {
                             app.results.push({subject: subject, level: level, name: name, discontinued: status})
+                            app.loadListBoxes()
                         }
+                        console.log(response.data);
                     })
             },
 
@@ -91,6 +97,7 @@ $(document).ready(function () {
                     .then(function (response) {
                         console.log(`DELETE /api/${elementId}`)
                         app.results = app.results.filter(x => x.name != elementId)
+                        console.log(response.data);
                     })
             },
 

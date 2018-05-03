@@ -9,11 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+/**
+ * The type Module dao.
+ */
 public class ModuleDaoImpl implements ModuleDao {
 
     @Autowired
     private  SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+    /**
+     * The hibernate session.
+     */
     Session session = null;
+    /**
+     * The hibernate transaction.
+     */
     Transaction tx = null;
 
     @Override
