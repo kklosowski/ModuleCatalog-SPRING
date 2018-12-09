@@ -1,3 +1,5 @@
+This is a simple REST Single Page Application created using Spring, Hibernate, Vue.js, JQuery and Axios.js. 
+
 To compile:
 1. mvn spring-boot:run
 2. Open browser and go to localhost:8080
