@@ -18,7 +18,7 @@ public class ModuleController {
     /**
      * The Module data access object.
      */
-    ModuleDaoImpl moduleDao = new ModuleDaoImpl();
+    ModuleDao moduleDao = new ModuleDaoImpl();
 
 
     /**
